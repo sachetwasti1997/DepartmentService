@@ -30,4 +30,10 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
+    @DeleteMapping("/delete/{code}")
+    public ResponseEntity<String> deleteDepartment(@PathVariable String code) {
+        departmentService.deleteByCode(code);
+        return ResponseEntity.ok("Department with code: "+code+" deleted successfully!");
+    }
+
 }

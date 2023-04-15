@@ -9,4 +9,5 @@ public interface DepartmentService {
     DepartmentDto getDepartmentByCode(String code);
     List<DepartmentDto> getAllDepartments();
     DepartmentDto updateDepartment(DepartmentDto departmentDto);
+    void deleteByCode(String code);
 }

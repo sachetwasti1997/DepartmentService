@@ -49,4 +49,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         department.setDepartmentDescription(departmentDto.getDepartmentDescription());
         return modelMapper.map(departmentRepository.save(department), DepartmentDto.class);
     }
+
+    @Override
+    public void deleteByCode(String code) {
+        Department department = departmentRepository
+                .findByDepartmentCode(code)
+                .orElseThrow(() -> new ResourceNotFound("Department", "CODE", code));
+        departmentRepository.delete(department);
+    }
 }
