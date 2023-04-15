@@ -2,6 +2,7 @@ package com.sachet.departmentservice.controller;
 
 import com.sachet.departmentservice.dto.DepartmentDto;
 import com.sachet.departmentservice.service.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/create")
-    public ResponseEntity<DepartmentDto> create(@RequestBody DepartmentDto departmentDto) {
+    public ResponseEntity<DepartmentDto> create(@RequestBody @Valid DepartmentDto departmentDto) {
         return ResponseEntity.ok(departmentService.saveDepartment(departmentDto));
     }
 
@@ -32,7 +33,7 @@ public class DepartmentController {
 
     @PutMapping("/update/{code}")
     public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable String code,
-            @RequestBody DepartmentDto departmentDto) {
+            @RequestBody @Valid DepartmentDto departmentDto) {
         return ResponseEntity.ok(departmentService.updateDepartmentByCode(code, departmentDto));
     }
 
