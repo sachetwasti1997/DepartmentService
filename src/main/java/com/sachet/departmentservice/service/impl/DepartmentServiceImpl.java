@@ -39,12 +39,13 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departments.stream().map(department -> modelMapper.map(department, DepartmentDto.class)).toList();
     }
     @Override
-    public DepartmentDto updateDepartment(DepartmentDto departmentDto) {
-        Long id = departmentDto.getId();
+    public DepartmentDto updateDepartmentByCode(String code, DepartmentDto departmentDto) {
         Department department = departmentRepository
-                .findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Department", "Id", id.toString()));
-        department.setDepartmentCode(department.getDepartmentCode());
+                .findByDepartmentCode(code)
+                .orElseThrow(() -> new ResourceNotFound("Department",
+                        "CODE",
+                        code));
+        department.setDepartmentCode(departmentDto.getDepartmentCode());
         department.setDepartmentName(departmentDto.getDepartmentName());
         department.setDepartmentDescription(departmentDto.getDepartmentDescription());
         return modelMapper.map(departmentRepository.save(department), DepartmentDto.class);

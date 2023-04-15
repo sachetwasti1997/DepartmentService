@@ -30,11 +30,10 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable Long id,
-                                                          @RequestBody DepartmentDto departmentDto) {
-        departmentDto.setId(id);
-        return ResponseEntity.ok(departmentService.updateDepartment(departmentDto));
+    @PutMapping("/update/{code}")
+    public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable String code,
+            @RequestBody DepartmentDto departmentDto) {
+        return ResponseEntity.ok(departmentService.updateDepartmentByCode(code, departmentDto));
     }
 
     @DeleteMapping("/delete/{code}")
