@@ -2,6 +2,7 @@ package com.sachet.departmentservice.service.impl;
 
 import com.sachet.departmentservice.dto.DepartmentDto;
 import com.sachet.departmentservice.entity.Department;
+import com.sachet.departmentservice.exception.CodeAlreadyExist;
 import com.sachet.departmentservice.exception.ResourceNotFound;
 import com.sachet.departmentservice.repository.DepartmentRepository;
 import com.sachet.departmentservice.service.DepartmentService;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +22,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto saveDepartment(DepartmentDto departmentDto) {
+        Optional<Department> departmentOp = departmentRepository.findByDepartmentCode(departmentDto.getDepartmentCode());
+        if (departmentOp.isPresent()) {
+            throw new CodeAlreadyExist("Code "+departmentDto.getDepartmentCode()+" already exist, please enter a unique " +
+                    "code");
+        }
         //Convert DepartmentDto to Department JPA Entity
         Department department = modelMapper.map(departmentDto, Department.class);
         return modelMapper.map(departmentRepository.save(department), DepartmentDto.class);
