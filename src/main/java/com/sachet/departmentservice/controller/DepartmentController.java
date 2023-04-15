@@ -30,6 +30,13 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable Long id,
+                                                          @RequestBody DepartmentDto departmentDto) {
+        departmentDto.setId(id);
+        return ResponseEntity.ok(departmentService.updateDepartment(departmentDto));
+    }
+
     @DeleteMapping("/delete/{code}")
     public ResponseEntity<String> deleteDepartment(@PathVariable String code) {
         departmentService.deleteByCode(code);
